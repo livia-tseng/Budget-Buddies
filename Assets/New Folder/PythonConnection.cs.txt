@@ -1,0 +1,64 @@
+using UnityEngine;
+using System.Net.Sockets;
+using System.Text;
+
+public class PythonConnection : MonoBehaviour
+{
+    private TcpClient tcpClient;
+    private NetworkStream stream;
+    private byte[] data;
+
+    // The server IP and port (must match Python server)
+    private string serverIP = "127.0.0.1";
+    private int serverPort = 5555;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        ConnectToPythonServer();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Example: send a message to Python server every frame
+        if (Input.GetKeyDown(KeyCode.Space))  // Trigger on space key
+        {
+            SendMessageToPython("Hello from Unity!");
+            ReceiveMessageFromPython();
+        }
+    }
+
+    // Connect to the Python server
+    void ConnectToPythonServer()
+    {
+        tcpClient = new TcpClient(serverIP, serverPort);
+        stream = tcpClient.GetStream();
+        data = new byte[256];
+        Debug.Log("Connected to Python server.");
+    }
+
+    // Send a message to the Python server
+    void SendMessageToPython(string message)
+    {
+        byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+        stream.Write(messageBytes, 0, messageBytes.Length);
+        Debug.Log("Message sent to Python: " + message);
+    }
+
+    // Receive a message from the Python server
+    void ReceiveMessageFromPython()
+    {
+        int bytesRead = stream.Read(data, 0, data.Length);
+        string receivedMessage = Encoding.UTF8.GetString(data, 0, bytesRead);
+        Debug.Log("Received from Python: " + receivedMessage);
+    }
+
+    // On application quit, close the connection
+    private void OnApplicationQuit()
+    {
+        stream.Close();
+        tcpClient.Close();
+        Debug.Log("Connection to Python server closed.");
+    }
+}

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/SampleScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/LoginScene.unity
+    guid: 2f2dea35d5d7fe645adf087f879ff001
+  - enabled: 1
+    path: Assets/Scenes/CreateAccountScene.unity
+    guid: c39761133d62f564abc9e3195ce8728e
+  - enabled: 1
+    path: Assets/Scenes/FirstScene.unity
+    guid: 5b55c57585c225647bd19b51ae120a7d
+  - enabled: 1
+    path: Assets/Scenes/HomeScene.unity
+    guid: 70755ef9888ec304fa51e61b9fe8ad6a
+  - enabled: 0
+    path: Assets/Scenes/MontlyIncomeScreen.unity
+    guid: a136c59ed480b404c8d187ae0e35a091
+  - enabled: 1
+    path: Assets/Scenes/MonthlyIncomeScreen.unity
+    guid: 6664f6637ed7d234b88abcf3a02d5621
+  - enabled: 1
+    path: Assets/Scenes/MonthlyBudgetScene.unity
+    guid: ed071078bae417f41b5d8177e07d6856
+  - enabled: 1
+    path: Assets/Scenes/LogPurchaseScene.unity
+    guid: d8474c6f202bea54095f5fc7bc4d925f
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_UseUCBPForAssetBundles: 0
