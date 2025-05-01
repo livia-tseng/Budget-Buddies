@@ -146,6 +146,7 @@ public class HomePageManager : MonoBehaviour
 //                instantiatedObject.transform.parent = otterTransform;
                 GameObject instantiatedObject = Instantiate(chosenPrefabGO, Vector3.zero, Quaternion.identity);
                 instantiatedObject.transform.SetParent(canvas.transform, false);
+                instantiatedObject.AddComponent<DraggableUI>();
 
                 // Set the position using anchoredPosition (assuming it's a UI prefab with RectTransform)
                 RectTransform rectTransform = instantiatedObject.GetComponent<RectTransform>();
