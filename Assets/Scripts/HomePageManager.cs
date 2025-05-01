@@ -110,6 +110,13 @@ public class HomePageManager : MonoBehaviour
         { "Other", otherSpritesGO }
     };
 
+    GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+    if (canvas == null)
+    {
+        Debug.LogWarning("Canvas not found. Cannot instantiate purchase prefabs.");
+        return;
+    }
+
     foreach (var purchase in purchasedItems)
     {
         string itemKey = $"{purchase.purchaseType}_{purchase.spriteName}";
@@ -128,15 +135,29 @@ public class HomePageManager : MonoBehaviour
 
                 // Instantiate the prefab at the specified position
 //                GameObject instantiatedObject = Instantiate(chosenPrefabGO, new Vector3(purchase.posX, purchase.posY, 0), Quaternion.identity);
-                GameObject instantiatedObject = Instantiate(chosenPrefabGO, new Vector3(367, 1737), Quaternion.identity);
-                instantiatedObject.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
-                Debug.Log("instantiated: " + chosenPrefabGO.name);
+//                Vector2 randomPosition = new Vector2(Random.Range(-250f, 250f), Random.Range(-0f, 500f));
+//                GameObject instantiatedObject = Instantiate(chosenPrefabGO, new Vector3(367, 1737), Quaternion.identity);
+//                instantiatedObject.transform.SetParent(GameObject.FindGameObjectWithTag("Canvas").transform, false);
+//                Debug.Log("instantiated: " + chosenPrefabGO.name);
                 // Scale the instantiated object
 //                instantiatedObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
                 // Optionally, you can parent the instantiated object to the otterTransform (or other parent object)
 //                instantiatedObject.transform.parent = otterTransform;
+                GameObject instantiatedObject = Instantiate(chosenPrefabGO, Vector3.zero, Quaternion.identity);
+                instantiatedObject.transform.SetParent(canvas.transform, false);
 
+                // Set the position using anchoredPosition (assuming it's a UI prefab with RectTransform)
+                RectTransform rectTransform = instantiatedObject.GetComponent<RectTransform>();
+                if (rectTransform != null)
+                {
+                    rectTransform.anchoredPosition = new Vector2(purchase.posX, purchase.posY);
+                }
+                else
+                {
+                    // Fallback in case it's not a UI prefab
+                    instantiatedObject.transform.localPosition = new Vector3(purchase.posX, purchase.posY, 0);
+                }
                 // Activate the instantiated GameObject (this is usually not necessary because Instantiate makes it active by default)
                 instantiatedObject.SetActive(true);
                 instantiatedItems.Add(itemKey);
@@ -147,7 +168,68 @@ public class HomePageManager : MonoBehaviour
             }
         }
     }
-}
+
+
+        // for instantiating only the most recent purchase
+//        List<UserDataManager.PurchaseData> purchasedItems = UserDataManager.Instance.GetPurchaseHistory();
+//        if (purchasedItems == null || purchasedItems.Count == 0)
+//        {
+//            Debug.Log("No purchased items to display.");
+//            return;
+//        }
+//
+//        // Get only the most recent purchase
+//        UserDataManager.PurchaseData purchase = purchasedItems[purchasedItems.Count - 1];
+//
+//        Dictionary<string, GameObject[]> categorySprites = new Dictionary<string, GameObject[]>
+//        {
+//            { "Food", foodSpritesGO },
+//            { "Travel", travelSpritesGO },
+//            { "Clothing", clothingSpritesGO },
+//            { "Entertainment", entertainmentSpritesGO },
+//            { "Other", otherSpritesGO }
+//        };
+//
+//        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+//        if (canvas == null)
+//        {
+//            Debug.LogWarning("Canvas not found. Cannot instantiate purchase prefab.");
+//            return;
+//        }
+//
+//        if (categorySprites.TryGetValue(purchase.purchaseType, out GameObject[] spriteGameObjects))
+//        {
+//            GameObject chosenPrefabGO = System.Array.Find(spriteGameObjects, sprite => sprite.name == purchase.spriteName);
+//
+//            if (chosenPrefabGO != null)
+//            {
+//                Debug.Log($"✅ Found prefab: {chosenPrefabGO.name}, instantiating it.");
+//
+//                GameObject instantiatedObject = Instantiate(chosenPrefabGO, Vector3.zero, Quaternion.identity);
+//                instantiatedObject.transform.SetParent(canvas.transform, false);
+//
+//                RectTransform rectTransform = instantiatedObject.GetComponent<RectTransform>();
+//                if (rectTransform != null)
+//                {
+//                    rectTransform.anchoredPosition = new Vector2(purchase.posX, purchase.posY);
+//                }
+//                else
+//                {
+//                    instantiatedObject.transform.localPosition = new Vector3(purchase.posX, purchase.posY, 0);
+//                }
+//
+//                instantiatedObject.SetActive(true);
+//            }
+//            else
+//            {
+//                Debug.LogError($"❌ No matching prefab found for {purchase.spriteName} in {purchase.purchaseType}");
+//            }
+//        }
+//        else
+//        {
+//            Debug.LogError($"❌ No prefab array found for category {purchase.purchaseType}");
+//        }
+    }
 
 
     // Example: Update the progress bar when a purchase is made

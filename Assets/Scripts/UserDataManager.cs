@@ -76,9 +76,14 @@ public class UserDataManager : MonoBehaviour
 
     public string GetEmailInput()
     {
-        return emailInputField != null && !string.IsNullOrEmpty(emailInputField.text)
-            ? emailInputField.text
-            : currentUserData.email;
+        if (emailInputField != null && !string.IsNullOrEmpty(emailInputField.text))
+        return emailInputField.text;
+
+        if (!string.IsNullOrEmpty(currentUserData.email))
+            return currentUserData.email;
+
+        // Last fallback: load from PlayerPrefs (in case currentUserData wasn't set yet)
+        return PlayerPrefs.GetString("UserEmail", "Unknown User");
     }
 
     public string GetPasswordInput()

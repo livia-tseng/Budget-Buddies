@@ -96,18 +96,18 @@ public class LogPurchaseManager : MonoBehaviour
 //        Instantiate(selectedPrefab, Vector3.zero, Quaternion.identity);
 //        Debug.Log("oke doke");
         // Load the home scene
-        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
-        if (canvas != null)
-        {
-            GameObject newUIObject = Instantiate(selectedPrefab, Vector3.zero, Quaternion.identity);
-            newUIObject.transform.SetParent(canvas.transform, false);
-            newUIObject.GetComponent<RectTransform>().anchoredPosition = randomPosition;
-            newUIObject.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("Canvas not found. Prefab not instantiated.");
-        }
+//        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+//        if (canvas != null)
+//        {
+//            GameObject newUIObject = Instantiate(selectedPrefab, Vector3.zero, Quaternion.identity);
+//            newUIObject.transform.SetParent(canvas.transform, false);
+//            newUIObject.GetComponent<RectTransform>().anchoredPosition = randomPosition;
+//            newUIObject.SetActive(true);
+//        }
+//        else
+//        {
+//            Debug.LogWarning("Canvas not found. Prefab not instantiated.");
+//        }
         Debug.Log("attempting to load home screen");
         SceneManager.LoadScene("HomeScene");
     }
